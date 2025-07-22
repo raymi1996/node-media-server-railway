@@ -1,29 +1,22 @@
+// server.js (versión final)
+
 const NodeMediaServer = require('node-media-server');
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
 
-// Ruta absoluta de la carpeta `media`
-const mediaRoot = path.join(__dirname, 'media');
+// 👉  ①  Definir variable global que exige node-media-server
+global.version = require('./package.json').version || '1.0.0';
 
-// Crear la carpeta `media` si no existe
+// 👉  ②  Asegurar carpeta media
+const mediaRoot = path.join(__dirname, 'media');
 if (!fs.existsSync(mediaRoot)) {
   fs.mkdirSync(mediaRoot, { recursive: true });
 }
 
-// Configuración del servidor
+// 👉  ③  Configuración
 const config = {
-  rtmp: {
-    port: 1935,
-    chunk_size: 60000,
-    gop_cache: true,
-    ping: 60,
-    ping_timeout: 30
-  },
-  http: {
-    port: 8000,
-    mediaroot: mediaRoot,
-    allow_origin: '*'
-  },
+  rtmp: { port: 1935, chunk_size: 60000, gop_cache: true, ping: 60, ping_timeout: 30 },
+  http: { port: 8000, mediaroot: mediaRoot, allow_origin: '*' },
   trans: {
     ffmpeg: '/usr/bin/ffmpeg',
     tasks: [
@@ -33,13 +26,12 @@ const config = {
         ac: 'aac',
         hls: true,
         hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
-        dash: false,
-        version: '3' // ¡Importante! esta línea debe estar dentro de este objeto
+        dash: false
       }
     ]
   }
 };
 
-// Inicializar y correr el servidor
+// 👉  ④  Iniciar servidor
 const nms = new NodeMediaServer(config);
 nms.run();
