@@ -1,15 +1,25 @@
 const NodeMediaServer = require('node-media-server');
+const fs = require('fs');
+const path = require('path');
+
+const mediaRoot = path.join(__dirname, 'media');
+
+// Asegura que exista la carpeta media
+if (!fs.existsSync(mediaRoot)) {
+  fs.mkdirSync(mediaRoot, { recursive: true });
+}
 
 const config = {
   rtmp: {
     port: 1935,
     chunk_size: 60000,
     gop_cache: true,
-    ping: 30,
-    ping_timeout: 60
+    ping: 60,
+    ping_timeout: 30
   },
   http: {
     port: 8000,
+    mediaroot: mediaRoot,
     allow_origin: '*'
   },
   trans: {
@@ -17,10 +27,8 @@ const config = {
     tasks: [
       {
         app: 'live',
-        vc: "copy",
-        vcParam: [],
-        ac: "aac",
-        acParam: ['-ab', '64k', '-ac', '1', '-ar', '44100'],
+        vc: 'copy',
+        ac: 'aac',
         hls: true,
         hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
         dash: false
