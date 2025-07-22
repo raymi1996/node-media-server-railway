@@ -33,7 +33,8 @@ const config = {
         ac: 'aac',
         hls: true,
         hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
-        dash: false
+        dash: false,
+        version: '3' // ESTA LÍNEA ES LA QUE FALTABA
       }
     ]
   }
