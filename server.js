@@ -2,9 +2,10 @@ const NodeMediaServer = require('node-media-server');
 const fs = require('fs');
 const path = require('path');
 
+// Define la ruta de la carpeta 'media'
 const mediaRoot = path.join(__dirname, 'media');
 
-// Asegura que exista la carpeta media
+// Crea la carpeta 'media' si no existe
 if (!fs.existsSync(mediaRoot)) {
   fs.mkdirSync(mediaRoot, { recursive: true });
 }
