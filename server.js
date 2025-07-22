@@ -2,10 +2,10 @@ const NodeMediaServer = require('node-media-server');
 const fs = require('fs');
 const path = require('path');
 
-// Ruta absoluta de la carpeta 'media'
+// Ruta absoluta de la carpeta `media`
 const mediaRoot = path.join(__dirname, 'media');
 
-// Crear la carpeta 'media' si no existe
+// Crear la carpeta `media` si no existe
 if (!fs.existsSync(mediaRoot)) {
   fs.mkdirSync(mediaRoot, { recursive: true });
 }
@@ -34,7 +34,7 @@ const config = {
         hls: true,
         hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
         dash: false,
-        version: '3' // ESTA LÍNEA ES LA QUE FALTABA
+        version: '3' // ¡Importante! esta línea debe estar dentro de este objeto
       }
     ]
   }
