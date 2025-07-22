@@ -2,14 +2,15 @@ const NodeMediaServer = require('node-media-server');
 const fs = require('fs');
 const path = require('path');
 
-// Define la ruta de la carpeta 'media'
+// Ruta absoluta de la carpeta 'media'
 const mediaRoot = path.join(__dirname, 'media');
 
-// Crea la carpeta 'media' si no existe
+// Crear la carpeta 'media' si no existe
 if (!fs.existsSync(mediaRoot)) {
   fs.mkdirSync(mediaRoot, { recursive: true });
 }
 
+// Configuración del servidor
 const config = {
   rtmp: {
     port: 1935,
@@ -38,5 +39,6 @@ const config = {
   }
 };
 
+// Inicializar y correr el servidor
 const nms = new NodeMediaServer(config);
 nms.run();
